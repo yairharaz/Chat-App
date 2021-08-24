@@ -12,6 +12,10 @@ input {
     font-size: 14px
 }
 
+select {
+    font-size: 14px
+}
+
 body {
     line-height: 1.4;
     color: #333;
@@ -30,6 +34,18 @@ label {
 }
 
 input {
+    border: 1px solid #eee;
+    padding: 12px;
+    outline: none
+}
+
+select {
+    border: 1px solid #eee;
+    padding: 12px;
+    outline: none
+}
+
+option {
     border: 1px solid #eee;
     padding: 12px;
     outline: none
@@ -79,6 +95,11 @@ button:disabled {
     width: 100%
 }
 
+.centered-form select {
+    margin-bottom: 16px;
+    width: 100%
+}
+
 .chat {
     display: flex
 }
@@ -99,6 +120,12 @@ button:disabled {
 }
 
 .chat__messages {
+    flex-grow: 1;
+    padding: 24px 24px 0;
+    overflow-y: scroll
+}
+
+.availble-rooms {
     flex-grow: 1;
     padding: 24px 24px 0;
     overflow-y: scroll

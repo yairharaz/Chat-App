@@ -7,6 +7,7 @@ const $sendLocationButton = document.getElementById('send-location')
 const $messages = document.querySelector('#messages')
 const $sidebar = document.querySelector('#sidebar')
 
+
 // Templates
 const messageTemplate = document.querySelector('#message-template').innerHTML
 const locationMessageTemplate = document.querySelector('#location-message-template').innerHTML
@@ -38,8 +39,9 @@ const autoScroll = () => {
     }
 }
 
+
+
 socket.on('message', ({ username, text, createdAt }) => {
-    console.log(username, text, createdAt)
     const html = Mustache.render(messageTemplate, {
         username,
         message: text,
@@ -50,7 +52,6 @@ socket.on('message', ({ username, text, createdAt }) => {
 })
 
 socket.on('locationMessage', ({ username, url, createdAt }) => {
-    console.log(username, url, createdAt)
     const html = Mustache.render(locationMessageTemplate, {
         username,
         url,
@@ -82,13 +83,11 @@ $messageForm.addEventListener('submit', (e) => {
         $messageFormInput.value = ''
         $messageFormInput.focus()
 
-
         //enable
 
         if (error) {
             return console.log(error)
         }
-        console.log('Message delivered')
     })
 })
 
@@ -109,7 +108,6 @@ $sendLocationButton.addEventListener('click', () => {
             longitude
         }, () => {
             $sendLocationButton.removeAttribute('disabled')
-            console.log('Location shared!')
         })
 
     })
@@ -120,6 +118,10 @@ socket.emit('join', { username, room }, (error) => {
         alert(error)
         location.href = '/'
     }
+})
+
+socket.on('activeRooms', (rooms) => {
+    activerooms = rooms
 })
 
 

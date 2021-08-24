@@ -5,6 +5,12 @@ const socketio = require('socket.io')
 const Filter = require('bad-words')
 const { generateMessage, generateLocationMessage } = require('./utils/messages')
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users')
+const { addRoom, removeRoom, getRooms } =require('./utils/room')
+
+// Playground:
+// removeRoom('home')
+// getRooms().forEach(room => console.log(room.name))
+
 
 const app = express()
 const server = http.createServer(app)
@@ -17,10 +23,12 @@ app.use(express.static(publicDirectoryPath))
 
 io.on('connection', (socket) => {
     console.log('New WebSocket connection');
+    io.emit('activeRooms', getRooms())
+
 
     socket.on('join', ({ username, room }, callback) => {
         const { error, user } = addUser({ id: socket.id, username, room })
-
+        addRoom(room)
         if (error) {
             return callback(error)
         }
@@ -67,6 +75,11 @@ io.on('connection', (socket) => {
                 room: user.room,
                 users: getUsersInRoom(user.room)
             })
+
+            if(getUsersInRoom(user.room).length === 0) {
+                removeRoom(user.room)
+            }
+            io.emit('activeRooms', getRooms())
         }
 
     })

@@ -18,11 +18,27 @@
                 <label for="">Display name</label>
                 <input type="text" name="username" placeholder="Display name" required>
                 <label for="">Room</label>
-                <input type="text" name="room" placeholder="room" required>
+                <input type="text" name="room" placeholder="room" list="existing-rooms" required autocomplete="off">
+                <label for="">Active rooms</label>
+                <div id="available-rooms" class="available-rooms"></div>
                 <button>Join</button>
             </form>
         </div>
+
     </div>
+    <script id="select-rooms-template" type="text/html">
+        <div class="rooms">
+            <datalist name="existing-rooms" id="existing-rooms">
+                {{#rooms}}
+                    <option value="{{name}}">{{name}}</option>
+                {{/rooms}}
+            </datalist>
+        </div>
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/rooms.js"></script>
 </body>
 
 </html>
